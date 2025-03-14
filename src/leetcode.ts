@@ -1,3 +1,7 @@
+// leetcode.ts
+//
+// Implements the actual fetching from leetcode's graphql API.
+
 import axios from "axios";
 
 interface Submission {
@@ -5,6 +9,7 @@ interface Submission {
   statusDisplay: string;
   title: string;
 }
+
 
 export async function getRecentSubmissions(username: string): Promise<Submission[]> {
   const query = `
