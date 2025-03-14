@@ -14,6 +14,8 @@ const commands: any[] = [];
 const commandFiles = fs.readdirSync(path.join(__dirname, 'commands'))
     .filter(file => file.endsWith('.ts') || file.endsWith('.js'));
 
+console.log(`Found ${commandFiles.length} commands.`)
+
 for (const file of commandFiles) {
     // Dynamically import the command
     const command = require(path.join(__dirname, 'commands', file)).default;

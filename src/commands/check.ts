@@ -16,6 +16,8 @@ const slashCommands = new SlashCommandBuilder()
 const checkCommand = {
     data: slashCommands,
     async execute(interaction: ChatInputCommandInteraction) {
+        console.log('Executing /check command');
+
         const username = interaction.options.getString('username');
         const hasSolvedToday: string[] = username == null ? [] : await solvedToday(username);
         let reply: string = `[${username}](https://leetcode.com/u/${username}) `;

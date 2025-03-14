@@ -18,7 +18,7 @@ const SECONDS_IN_DAY = 86400;
 export async function getRecentSubmissions(username: string): Promise<Submission[]> {
   const query = `
     {
-      recentSubmissionList(username: "${username}") {
+      recentSubmissionList(username: "${username}", limit: 10) {
         timestamp
         statusDisplay
         title
@@ -70,8 +70,6 @@ export async function solvedToday(username: string): Promise<string[]> {
 
   console.log(`Checking ${username}'s submissions for daily update..`);
   console.log(submissions);
-
-
 
   try {
     return getUniqueSubmissions(submissions.filter(submission =>
