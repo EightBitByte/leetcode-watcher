@@ -1,4 +1,8 @@
 // deploy-commands.ts
+//
+// Deploys the commands in src/commands to discord, so users can see which 
+// commands are available to them.
+
 import { client } from './bot';  // Import the client from bot.ts
 import { SlashCommandBuilder } from 'discord.js';
 import * as fs from 'fs';

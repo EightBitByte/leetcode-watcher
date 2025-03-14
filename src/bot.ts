@@ -29,18 +29,12 @@ async function checkLeetCodeAndNotify() {
 
   if (solvedInLastHour(submissions)) {
     const channel = (await client.channels.fetch(CHANNEL_ID)) as TextChannel;
-    await channel.send(`${LEETCODE_USERNAME} has solved a LeetCode problem in the last hour! 🎉`);
-  } else {
-    const channel = (await client.channels.fetch(CHANNEL_ID)) as TextChannel;
-    await channel.send(`${LEETCODE_USERNAME} has NOT solved a LeetCode problem in the last hour! 😡`);
-  }
+    await channel.send(`${LEETCODE_USERNAME} has solved a LeetCode problem (${submissions[0].title})! 🎉`);
+  } 
 }
 
 client.once("ready", async () => {
   console.log(`Logged in as ${client.user?.tag}`);
-
-  // Run a check immediately on bot startup
-  await checkLeetCodeAndNotify();
 
   // Schedule the bot to check every hour (at minute 0)
   schedule.scheduleJob("0 * * * *", async () => {
