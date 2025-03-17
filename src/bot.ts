@@ -34,7 +34,7 @@ async function checkLeetCodeAndNotify() {
 }
 
 client.once("ready", async () => {
-  console.log(`Logged in as ${client.user?.tag}`);
+  console.log(`Logged in as ${client.user?.tag} -- Ready.`);
 
   // Schedule the bot to check every hour (at minute 0)
   schedule.scheduleJob("0 * * * *", async () => {
