@@ -2,8 +2,8 @@
 //
 // Implements a command to force check a user's leetcode status.
 
-import { SlashCommandBuilder, ChatInputCommandInteraction, User } from "discord.js";
-import { solvedToday } from "../leetcode";
+import { SlashCommandBuilder, ChatInputCommandInteraction, MessageFlags } from "discord.js";
+import { solvedToday, userExists } from "../leetcode";
 
 const slashCommands = new SlashCommandBuilder()
         .setName('check')
@@ -19,13 +19,21 @@ const checkCommand = {
         console.log('Executing /check command');
 
         const username = interaction.options.getString('username');
+        
+        if (!await userExists(username!)) {
+            await interaction.reply({ content: `Oops! ${username} does not exist. Check your spelling and try again.`,
+                                      flags: MessageFlags.Ephemeral});
+            return;
+        }
+
+
         const hasSolvedToday: string[] = username == null ? [] : await solvedToday(username);
         let reply: string = `[${username}](https://leetcode.com/u/${username}) `;
 
         if (hasSolvedToday.length == 0) {
             reply += "has NOT solved any LeetCode problems today! 😡";
         } else {
-            reply += `has solved ${hasSolvedToday.length} LeetCode problems today! 😊\n`;
+            reply += `has solved ${hasSolvedToday.length} LeetCode ${hasSolvedToday.length > 1 ? 'problems' : 'problem'} today! 😊\n`;
             hasSolvedToday.forEach((link => {reply += `- ${link}\n`;}))
         }
 

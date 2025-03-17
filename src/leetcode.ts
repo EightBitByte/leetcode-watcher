@@ -14,6 +14,34 @@ interface Submission {
 const SECONDS_IN_HR = 3600;
 const SECONDS_IN_DAY = 86400;
 
+export async function userExists(username: string): Promise<Boolean> {
+  const query = `
+      query getUserProfile($username: String!) {
+        matchedUser(username: $username) {
+          username
+        }
+      }
+    `;
+
+    try {
+      const response = await axios.post(
+        "https://leetcode.com/graphql",
+        {
+          query,
+          variables: { username }, // Use variables instead of direct interpolation
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      return response.data.data.matchedUser !== null;
+    } catch (error) {
+      console.error("Error fetching LeetCode data:", error);
+      return false;
+    }
+}
+
 // Returns a list of the user's most recent submissions.
 export async function getRecentSubmissions(username: string): Promise<Submission[]> {
   const query = `
