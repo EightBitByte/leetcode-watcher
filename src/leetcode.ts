@@ -14,6 +14,7 @@ interface Submission {
 const SECONDS_IN_HR = 3600;
 const SECONDS_IN_DAY = 86400;
 
+// Returns whether or not the user is registered with LeetCode.
 export async function userExists(username: string): Promise<Boolean> {
   const query = `
       query getUserProfile($username: String!) {
@@ -28,7 +29,7 @@ export async function userExists(username: string): Promise<Boolean> {
         "https://leetcode.com/graphql",
         {
           query,
-          variables: { username }, // Use variables instead of direct interpolation
+          variables: { username }, 
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -41,6 +42,7 @@ export async function userExists(username: string): Promise<Boolean> {
       return false;
     }
 }
+
 
 // Returns a list of the user's most recent submissions.
 export async function getRecentSubmissions(username: string): Promise<Submission[]> {
