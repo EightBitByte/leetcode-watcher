@@ -21,7 +21,7 @@ const checkCommand = {
     const username = interaction.options.getString('username');
     
     if (!await userExists(username!)) {
-        await interaction.reply({ content: `Oops! User with name '${username}' does not exist. Check your spelling and try again.`,
+        await interaction.reply({ content: `Oops! User with name '${username}' cannot be found on LeetCode. Check your spelling and try again.`,
                                   flags: MessageFlags.Ephemeral});
         return;
     }
