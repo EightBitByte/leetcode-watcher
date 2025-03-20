@@ -106,7 +106,7 @@ export async function solvedToday(username: string, timestampsEnabled: boolean):
       submission.timestamp >= twentyFourHoursAgo 
       && submission.statusDisplay === "Accepted"
     )).map(submission => 
-      `[${submission.title}](https://leetcode.com/problems/${submission.titleSlug})${timestampsEnabled ? " " + submission.timestamp : ""}`);
+      `[${submission.title}](https://leetcode.com/problems/${submission.titleSlug})${timestampsEnabled ? ` <t:${submission}:t>` : ""}`);
   } catch (error) {
     console.error("Error fetching LeetCode data:", error);
     return [];
