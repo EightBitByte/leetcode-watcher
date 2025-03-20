@@ -2,7 +2,7 @@
 //
 // Implements a command to force check a user's leetcode status.
 
-import { SlashCommandBuilder, ChatInputCommandInteraction, MessageFlags } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction, MessageFlags, SlashCommandBooleanOption } from "discord.js";
 import { solvedToday, userExists } from "../leetcode";
 
 const slashCommands = new SlashCommandBuilder()
@@ -11,14 +11,19 @@ const slashCommands = new SlashCommandBuilder()
   .addStringOption(option =>
     option.setName('username')
       .setDescription('specified user\'s LeetCode username')
-      .setRequired(true));
+      .setRequired(true))
+  .addBooleanOption(option =>
+    option.setName('timestamp')
+      .setDescription('if enabled, also prints timestamp of solved problems')
+      .setRequired(false));
 
 const checkCommand = {
   data: slashCommands,
   async execute(interaction: ChatInputCommandInteraction) {
     console.log('Executing /check command');
 
-    const username = interaction.options.getString('username');
+    const username: string = interaction.options.getString('username')!;
+    const timestampsEnabled: boolean = interaction.options.getBoolean('timestamp')!;
     
     if (!await userExists(username!)) {
         await interaction.reply({ content: `Oops! User with name '${username}' cannot be found on LeetCode. Check your spelling and try again.`,
@@ -26,8 +31,7 @@ const checkCommand = {
         return;
     }
 
-
-    const hasSolvedToday: string[] = username == null ? [] : await solvedToday(username);
+    const hasSolvedToday: string[] = username == null ? [] : await solvedToday(username, timestampsEnabled);
     let reply: string = `[${username}](https://leetcode.com/u/${username}) `;
 
     if (hasSolvedToday.length == 0) {

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "commands": "npx ts-node src/deploy-commands.ts"
   },
   "keywords": [],
   "author": "",

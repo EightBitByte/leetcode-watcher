@@ -94,7 +94,7 @@ function getUniqueSubmissions(submissions: Submission[]): Submission[] {
 }
 
 
-export async function solvedToday(username: string): Promise<string[]> {
+export async function solvedToday(username: string, timestampsEnabled: boolean): Promise<string[]> {
   const twentyFourHoursAgo = Math.floor(Date.now() / 1000) - SECONDS_IN_DAY;
   let submissions: Submission[] = await getRecentSubmissions(username);
 
@@ -105,7 +105,8 @@ export async function solvedToday(username: string): Promise<string[]> {
     return getUniqueSubmissions(submissions.filter(submission =>
       submission.timestamp >= twentyFourHoursAgo 
       && submission.statusDisplay === "Accepted"
-    )).map(submission => `[${submission.title}](https://leetcode.com/problems/${submission.titleSlug})`);
+    )).map(submission => 
+      `[${submission.title}](https://leetcode.com/problems/${submission.titleSlug})${timestampsEnabled ? " " + submission.timestamp : ""}`);
   } catch (error) {
     console.error("Error fetching LeetCode data:", error);
     return [];
