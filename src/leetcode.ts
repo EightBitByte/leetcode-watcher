@@ -79,6 +79,8 @@ export function solvedInLastHour(submissions: Submission[]): boolean {
   );
 }
 
+
+// Returns the unique submission from `submissions.` (ones with unique names and timestamps)
 function getUniqueSubmissions(submissions: Submission[]): Submission[] {
   const uniqueSubmissions: { [title: string]: Submission } = {};
 
